@@ -1,0 +1,83 @@
+/*
+  File: PartThree.java
+  August 2002
+*/
+
+import java.io.*;
+import java.util.*;
+import java.sql.*;
+
+/**
+ * This program reads a user's pass.dat and connects to Oracle.
+ *
+ * @author Paul Werstein
+ */
+
+public class PartThree {
+
+
+    public static void main (String[] args) {
+	new PartThree().go();
+    }
+
+    // This is the function that does all the work
+    private void go() {
+
+	// Read pass.dat
+	UserPass login = new UserPass();
+	String user = login.getUserName();
+	String pass = login.getPassWord();
+	String host = "silver";
+
+	Connection con = null;
+        //Statement stmt = null;
+	try {
+	    // Register the driver and connect to Oracle
+	    DriverManager.registerDriver 
+		(new oracle.jdbc.driver.OracleDriver());
+	    String url = "jdbc:oracle:thin:@" + host + ":1527:cosc344";
+            System.out.println("url: " + url);
+	    con = DriverManager.getConnection(url, user, pass);
+            // Turn off autocommit
+            con.setAutoCommit(false);
+	    System.out.println("Connected to Oracle");
+
+            Statement stmt  = con.createStatement();
+            
+            String command = new String("UPDATE employee "+" SET salary = salary*1.1");
+            System.out.println("command: " +command);
+            stmt.executeUpdate(command);
+            
+            String sql = new String("select salary"+" FROM employee");
+            System.out.println("SQL: " +sql);
+            ResultSet result = stmt.executeQuery(sql);
+            
+            while(result.next()){
+            String salary = result.getString("salary");
+            System.out.println("salary: " + salary);
+            }
+            result.close();
+	} catch (SQLException e) {
+	    System.out.println(e.getMessage());
+	    System.exit(1);
+
+	} finally {
+	    if (con != null) {
+		try {
+		    con.close();
+		} catch (SQLException e) {
+		    quit(e.getMessage());
+		}
+	    }
+	}
+    }  // end go()
+
+    // Used to output an error message and exit
+    private void quit(String message) {
+	System.err.println(message);
+	System.exit(1);
+    }
+
+} // end class PartThree
+
+

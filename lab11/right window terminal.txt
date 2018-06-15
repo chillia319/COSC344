@@ -1,0 +1,15 @@
+1.select * from msun.emp;
+
+2.update msun.dept set DNAME ='Head' where DNUMBER='1';
+  update msun.dept set DNUMBER='2' where DNAME='Head';
+
+3.select * from msun.emp;
+
+4.select * from msun.emp;
+  select * from msun.dept;
+
+5.select * from msun.EasyViewOne;
+  select * from msun.EasyViewTwo;
+
+6.select * from msun.SalaryView;
+

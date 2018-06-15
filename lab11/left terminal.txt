@@ -1,0 +1,20 @@
+1.GRANT SELECT ON emp TO msun1;
+
+2.GRANT UPDATE(dname) ON dept TO msun1;
+
+3.REVOKE all privileges emp,dept FROM msun1;
+
+4.CREATE ROLE researcher;
+  GRANT SELECT ON emp,dept TO researcher;
+  GRANT researcher TO msun1;
+
+5.CREATE VIEW EasyViewOne AS
+  SELECT fname, lname FROM emp;
+  GRANT SELECT ON EasyViewOne TO msun1;
+
+  CREATE VIEW EasyViewTwo AS
+  SELECT dname FROM DEPT;
+  GRANT SELECT ON EasyViewTwo TO msun1;
+
+6.CREATE SalaryView AS fname, lname, salary FROM emp WHERE salary <= 50000;
+  GRANT SELECT ON SalaryView TO msun1; 

@@ -1,0 +1,12 @@
+cl scr;
+DESCRIBE employee;
+select dependent_name from dependent where relationship = 'Daughter' or relationship = 'Spouse';
+select dependent_name from (select distinct essn, dependent_name from dependent where relationship in 'Daughter','Spouse');
+select pname from project where plocation IS NULL;
+select fname,lname, dname from department, employee where department.mgrssn = employee.ssn; 
+select distinct fname, lname from employee, works_on where employee.ssn = works_on.essn and hours < 18;
+select fname, lname from employee where lname LIKE 'W%';
+select sname from salespeople where city IN ('San Jose', 'Barcelona');
+select cname, amt from customers, orders where customers.cnum = orders.cnum and amt BETWEEN 1500 AND 5000;
+select count (*) "row" from orders;
+select avg(amt) "average" from orders;
